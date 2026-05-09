@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Между Мирами – Медитации</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0a1929;
+      color: #d9e2ec;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0d1f33 0%, #132a45 100%);
+      color: #f0f3f8;
+      padding: 1.8rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+    }
+
+    header h1 {
+      font-weight: 300;
+      letter-spacing: 3px;
+      font-size: 2.2rem;
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(212,175,55,0.4);
+    }
+
+    header h1 span {
+      color: #d4af37;
+      font-weight: 400;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background: rgba(13, 25, 43, 0.95);
+      backdrop-filter: blur(4px);
+      padding: 0.8rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(192,192,192,0.15);
+    }
+
+    nav button {
+      background: none;
+      border: 1px solid transparent;
+      font-size: 1rem;
+      padding: 0.6rem 1.8rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.25s;
+      color: #b0c4de;
+      font-weight: 500;
+    }
+
+    nav button.active {
+      background: rgba(212,175,55,0.12);
+      border-color: #d4af37;
+      color: #d4af37;
+      box-shadow: 0 0 12px rgba(212,175,55,0.2);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      flex: 1;
+    }
+
+    /* ФИЛЬТРЫ */
+    .filters {
+      background: #0f1f31;
+      border: 1px solid rgba(192,192,192,0.1);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+
+    .filter-group {
+      flex: 1 1 200px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .filter-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #aac8e0;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+
+    select, .filter-group input {
+      padding: 0.65rem 0.8rem;
+      border: 1px solid rgba(192,192,192,0.2);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      background: #0a1929;
+      color: #e2eaf3;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    select:focus, .filter-group input:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 10px rgba(212,175,55,0.2);
+    }
+
+    .filter-actions {
+      display: flex;
+      align-items: end;
+    }
+
+    .filter-actions button {
+      background: transparent;
+      color: #c0c0c0;
+      border: 1px solid #c0c0c0;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.25s;
+    }
+
+    .filter-actions button:hover {
+      background: rgba(192,192,192,0.08);
+      border-color: #d4af37;
+      color: #d4af37;
+    }
+
+    /* КАРТОЧКИ */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #112438;
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      border: 1px solid rgba(192,192,192,0.08);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(212,175,55,0.15);
+      border-color: rgba(212,175,55,0.4);
+    }
+
+    .card h3 {
+      font-weight: 500;
+      font-size: 1.3rem;
+      color: #f0e6d2;
+    }
+
+    .card .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .badge {
+      background: rgba(212,175,55,0.1);
+      color: #d4af37;
+      padding: 0.25rem 0.8rem;
+      border-radius: 20px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+
+    .badge.coming {
+      background: rgba(212,175,55,0.05);
+      color: #b49450;
+      border: 1px dashed #b49450;
+      font-style: italic;
+      margin-top: 0.3rem;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      flex-grow: 1;
+    }
+
+    .duration {
+      color: #8b9dc3;
+      font-size: 0.85rem;
+      margin-top: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 3rem;
+      color: #6b7c93;
+      font-style: italic;
+    }
+
+    /* МОДАЛЬНОЕ ОКНО */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(5, 12, 22, 0.8);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #0f1f31;
+      max-width: 550px;
+      width: 90%;
+      border-radius: 28px;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px rgba(212,175,55,0.1);
+      border: 1px solid rgba(192,192,192,0.15);
+      color: #d9e2ec;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #8b9dc3;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #d4af37;
+    }
+
+    .modal h2 {
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+      color: #f0e6d2;
+    }
+
+    .modal .badge {
+      margin-right: 0.4rem;
+    }
+
+    .modal p {
+      margin: 1rem 0;
+      color: #bcc9db;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 1.2rem;
+      border-radius: 8px;
+      background: #0a1929;
+    }
+
+    /* БЛОК "ОБО МНЕ" И КОНСУЛЬТАЦИИ */
+    .about, .services {
+      background: #112438;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      border: 1px solid rgba(192,192,192,0.12);
+      margin-bottom: 2rem;
+    }
+
+    .about h2, .services h2 {
+      color: #d4af37;
+      font-weight: 400;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .services h3 {
+      color: #d4af37;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .about ul, .services ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .about li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+      color: #cbd5e1;
+    }
+
+    .about li::before {
+      content: "•";
+      color: #d4af37;
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .services li {
+      margin-bottom: 0.8rem;
+      padding-left: 1.8rem;
+      position: relative;
+      color: #cbd5e1;
+    }
+
+    .services li::before {
+      content: "◆";
+      color: #d4af37;
+      font-size: 0.9rem;
+      position: absolute;
+      left: 0;
+      top: 0.1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      color: #6b7c93;
+      background: #0d1f33;
+      margin-top: auto;
+      border-top: 1px solid rgba(192,192,192,0.1);
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.4rem;
+      }
+      .filters {
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 1rem;
+      }
+      .filter-group {
+        flex: unset;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Между <span>Мирами</span></h1>
+  </header>
+
+  <nav>
+    <button id="nav-meditations" class="active">Медитации</button>
+    <button id="nav-services">Консультации</button>
+  </nav>
+
+  <div class="container">
+    <div id="section-meditations">
+      <div class="filters">
+        <div class="filter-group">
+          <label for="filter-type">Тип практики</label>
+          <select id="filter-type">
+            <option value="">Все типы</option>
+            <option value="Гипнотерапия">Гипнотерапия</option>
+            <option value="Духовные медитации">Духовные медитации</option>
+            <option value="Йога-нидра">Йога-нидра</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filter-goal">Цель</label>
+          <select id="filter-goal">
+            <option value="">Все цели</option>
+            <option value="Изменение состояния">Изменение состояния</option>
+            <option value="Целостность">Целостность</option>
+            <option value="Расслабление">Расслабление</option>
+            <option value="Позитив">Позитив</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filter-duration">Длительность</label>
+          <select id="filter-duration">
+            <option value="">Любая</option>
+            <option value="short">до 10 мин</option>
+            <option value="medium">10–20 мин</option>
+            <option value="long">больше 20 мин</option>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <button id="reset-filters">Сбросить</button>
+        </div>
+      </div>
+
+      <div id="meditation-grid" class="grid"></div>
+    </div>
+
+    <!-- Вкладка "Консультации" с блоком "Обо мне" --> 
+    <div id="section-services" style="display: none;">
+      <div class="about">
+        <h2>Обо мне</h2>
+        <p style="color:#f0e6d2; font-size:1.1rem; margin-bottom:1rem;">Нина Мацнева</p>
+        <ul>
+          <li>Сертифицированный гипнотерапевт (Диплом РУДН)</li>
+          <li>Преподаватель йоги (Диплом школы oum.ru, International Yoga Federation)</li>
+          <li>Преподаватель медитации (Диплом Школы oum.ru)</li>
+          <li>Регрессолог (Школа Регрессий Алексея Кройтора)</li>
+        </ul>
+      </div>
+
+      <div class="services">
+        <h2>Консультации</h2>
+        <p>На индивидуальной сессии вы сможете проработать свои запросы и получить медитации, созданные и наиболее подходящие лично для вас.</p>
+
+        <h3>Формат работы</h3>
+        <ul>
+          <li><strong>Краткосрочная гипнотерапия (эриксоновский гипноз)</strong> – 60 мин., очно или онлайн.</li>
+          <li><strong>Исследование глубинной памяти (регрессия в давние воспоминания)</strong> – 120 мин, очно или онлайн.</li>
+          <li><strong>Йога-нидра (глубокое расслабление и формирование намерения)</strong> – 60 мин, онлайн.</li>
+        </ul>
+
+        <h3>Как записаться</h3>
+        <p>📩 Telegram: @nina.matsneva</p>
+        <p style="font-style: italic; margin-top: 1.5rem; color: #d4af37;">Бесплатная 15-минутная консультация для новых клиентов.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 Между Мирами. Все практики записаны и предоставлены автором.
+  </footer>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <div id="modal-details"></div>
+      <audio id="modal-audio" controls>
+        <source src="" type="audio/mpeg">
+        Ваш браузер не поддерживает аудиоплеер.
+      </audio>
+    </div>
+  </div>
+
+  <script>
+    const meditations = [
+      {
+        id: 1,
+        title: "Путешествие в приятное место",
+        type: "Гипнотерапия",
+        goal: "Изменение состояния",
+        durationMin: 10,
+        description: "Глубокая гипнотическая прогулка к вашему личному месту силы и покоя.",
+        audioUrl: ""
+      },
+      {
+        id: 2,
+        title: "Признание в любви себе",
+        type: "Гипнотерапия",
+        goal: "Изменение состояния",
+        durationMin: 5,
+        description: "Короткая, но очень тёплая практика принятия и любви к себе.",
+        audioUrl: ""
+      },
+      {
+        id: 3,
+        title: "Погружение в приятное воспоминание",
+        type: "Гипнотерапия",
+        goal: "Изменение состояния",
+        durationMin: 10,
+        description: "Ресурсное путешествие в счастливый момент прошлого.",
+        audioUrl: ""
+      },
+      {
+        id: 4,
+        title: "Храм исцеления",
+        type: "Духовные медитации",
+        goal: "Целостность",
+        durationMin: 10,
+        description: "Медитация-визуализация в священном пространстве внутреннего исцеления.",
+        audioUrl: ""
+      },
+      {
+        id: 5,
+        title: "Йога-нидра экспресс",
+        type: "Йога-нидра",
+        goal: "Расслабление",
+        durationMin: 15,
+        description: "Быстрое погружение в состояние глубокого расслабления и осознанности.",
+        audioUrl: ""
+      },
+      {
+        id: 6,
+        title: "Настрой на успешный день",
+        type: "Гипнотерапия",
+        goal: "Позитив",
+        durationMin: 5,
+        description: "Утренняя настройка на продуктивность, уверенность и хорошее настроение.",
+        audioUrl: ""
+      }
+    ];
+
+    const grid = document.getElementById('meditation-grid');
+    const modal = document.getElementById('modal');
+    const modalDetails = document.getElementById('modal-details');
+    const modalAudio = document.getElementById('modal-audio');
+    const closeBtn = document.getElementById('modal-close');
+    const filterType = document.getElementById('filter-type');
+    const filterGoal = document.getElementById('filter-goal');
+    const filterDuration = document.getElementById('filter-duration');
+    const resetBtn = document.getElementById('reset-filters');
+    const navMeditations = document.getElementById('nav-meditations');
+    const navServices = document.getElementById('nav-services');
+    const sectionMeditations = document.getElementById('section-meditations');
+    const sectionServices = document.getElementById('section-services');
+
+    function renderMeditations(filteredList) {
+      if (filteredList.length === 0) {
+        grid.innerHTML = '<div class="empty">Нет медитаций, соответствующих фильтрам</div>';
+        return;
+      }
+      grid.innerHTML = filteredList.map(m => `
+        <div class="card" data-id="${m.id}">
+          <h3>${m.title}</h3>
+          <div class="meta">
+            <span class="badge">${m.type}</span>
+            ${m.goal ? `<span class="badge">${m.goal}</span>` : ''}
+          </div>
+          <p>${m.description}</p>
+          <div class="duration">⏱ ${m.durationMin} мин.</div>
+          <div class="badge coming">Coming Soon</div>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = parseInt(card.dataset.id);
+          showModal(id);
+        });
+      });
+    }
+
+    function filterMeditations() {
+      const type = filterType.value;
+      const goal = filterGoal.value;
+      const dur = filterDuration.value;
+
+      let filtered = meditations;
+      if (type) filtered = filtered.filter(m => m.type === type);
+      if (goal) filtered = filtered.filter(m => m.goal === goal);
+      if (dur) {
+        if (dur === 'short') filtered = filtered.filter(m => m.durationMin <= 10);
+        else if (dur === 'medium') filtered = filtered.filter(m => m.durationMin > 10 && m.durationMin <= 20);
+        else if (dur === 'long') filtered = filtered.filter(m => m.durationMin > 20);
+      }
+      renderMeditations(filtered);
+    }
+
+    function resetFilters() {
+      filterType.value = '';
+      filterGoal.value = '';
+      filterDuration.value = '';
+      renderMeditations(meditations);
+    }
+
+    function showModal(id) {
+      const m = meditations.find(med => med.id === id);
+      if (!m) return;
+      modalDetails.innerHTML = `
+        <h2>${m.title}</h2>
+        <span class="badge">${m.type}</span>
+        ${m.goal ? `<span class="badge">${m.goal}</span>` : ''}
+        <span style="margin-left: 1rem; color: #8b9dc3;">⏱ ${m.durationMin} мин.</span>
+        <p>${m.description}</p>
+        ${m.audioUrl ? '' : '<p style="font-size:0.9rem; color:#b49450;">*Аудиозапись появится позже (Coming Soon)</p>'}
+      `;
+      if (m.audioUrl) {
+        modalAudio.src = m.audioUrl;
+        modalAudio.style.display = 'block';
+      } else {
+        modalAudio.style.display = 'none';
+      }
+      modal.classList.add('open');
+    }
+
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('open');
+      modalAudio.pause();
+      modalAudio.src = '';
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('open');
+        modalAudio.pause();
+        modalAudio.src = '';
+      }
+    });
+
+    navMeditations.addEventListener('click', () => {
+      navMeditations.classList.add('active');
+      navServices.classList.remove('active');
+      sectionMeditations.style.display = 'block';
+      sectionServices.style.display = 'none';
+    });
+    navServices.addEventListener('click', () => {
+      navServices.classList.add('active');
+      navMeditations.classList.remove('active');
+      sectionMeditations.style.display = 'none';
+      sectionServices.style.display = 'block';
+    });
+
+    filterType.addEventListener('change', filterMeditations);
+    filterGoal.addEventListener('change', filterMeditations);
+    filterDuration.addEventListener('change', filterMeditations);
+    resetBtn.addEventListener('click', resetFilters);
+
+    renderMeditations(meditations);
+  </script>
+</body>
+</html>
