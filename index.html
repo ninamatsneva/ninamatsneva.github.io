@@ -378,6 +378,43 @@
         flex: unset;
       }
     }
+    /*  КНОПКИ СКАЧИВАНИЯ ПРИЛОЖЕНИЯ */
+    /* Стили для страницы загрузки */
+.app-download {
+  background: #112438;
+  border: 1px solid rgba(192,192,192,0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.app-download h2 {
+  color: #f0e6d2;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.download-btn {
+  display: inline-block;
+  background: transparent;
+  color: #d4af37;
+  border: 2px solid #d4af37;
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+.download-btn:hover {
+  background: #d4af37;
+  color: #0a1929;
+}
   </style>
 </head>
 <body>
@@ -388,6 +425,7 @@
   <nav>
     <button id="nav-meditations" class="active">Медитации</button>
     <button id="nav-services">Консультации</button>
+    <button id="nav-app">Приложение</button>
   </nav>
 
   <div class="container">
@@ -458,6 +496,15 @@
         <p style="font-style: italic; margin-top: 1.5rem; color: #d4af37;">Бесплатная 15-минутная консультация для новых клиентов.</p>
       </div>
     </div>
+    <!-- Вкладка "Приложение" --> 
+    <div id="section-app" style="display: none;">
+  <div class="app-download">
+    <h2>Скачать приложение для Android </h2>
+    <p>Установите «Между Мирами» на свой телефон, чтобы практики всегда были под рукой.</p>
+    <a href="/apk/meditation-app.apk" class="download-btn">⬇️ Скачать APK</a>
+    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b9dc3;">Версия для Android. После скачивания откройте файл и разрешите установку из неизвестных источников.</p>
+  </div>
+</div>
   </div>
 
   <footer>
@@ -546,6 +593,8 @@
     const navServices = document.getElementById('nav-services');
     const sectionMeditations = document.getElementById('section-meditations');
     const sectionServices = document.getElementById('section-services');
+    const navApp = document.getElementById('nav-app');
+    const sectionApp = document.getElementById('section-app');
 
     function renderMeditations(filteredList) {
       if (filteredList.length === 0) {
@@ -648,6 +697,15 @@
     resetBtn.addEventListener('click', resetFilters);
 
     renderMeditations(meditations);
+navApp.addEventListener('click', () => {
+  navApp.classList.add('active');
+  navMeditations.classList.remove('active');
+  navServices.classList.remove('active');
+  sectionMeditations.style.display = 'none';
+  sectionServices.style.display = 'none';
+  sectionApp.style.display = 'block';
+});
+    
   </script>
   <script>
   if ('serviceWorker' in navigator) {
