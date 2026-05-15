@@ -550,7 +550,7 @@
           </div>
           <p>${m.description}</p>
           <div class="duration">⏱ ${m.durationMin} мин.</div>
-          <div class="badge coming">Coming Soon</div>
+          ${m.audioUrl ? '' : '<div class="badge coming">Coming Soon</div>'}
         </div>
       `).join('');
 
