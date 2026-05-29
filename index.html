@@ -655,6 +655,17 @@
           .catch(err => console.log('SW failed', err));
       });
     }
+    // Проверка прямой ссылки на медитацию при загрузке страницы
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const meditationId = params.get('meditation');
+  if (meditationId) {
+    // Небольшая задержка, чтобы DOM точно был готов
+    setTimeout(() => {
+      showModal(parseInt(meditationId));
+    }, 300);
+  }
+})();
   </script>
 </body>
 </html>
